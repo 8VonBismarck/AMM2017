@@ -1,0 +1,416 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 8-nov-2017, 15.45.47
+    Author     : admin
+*/
+
+@media only screen and (min-width:1024px){
+body{
+    background-color: white;
+    font-family: Verdana, sans-serif;
+    color: darkslategray;
+    height: 100%;
+    width:100%;
+}
+
+
+h1,h2{
+   display: inline-block; 
+}
+
+a{
+    text-decoration: none; 
+}
+
+a:hover{
+    color: darkblue;
+    text-decoration: underline;
+}
+
+a:visited{
+    color: darkblue;
+}
+
+page{
+    height: 100%;
+    width:100%;
+}
+
+header{
+    width:100%;
+    border-bottom-style: solid;
+}
+
+.cl1{
+    display: inline-block;
+    border-right-style: solid; 
+    width: 20%;
+}
+
+.cl2{
+    display: inline-block;
+    position: relative;
+    margin-right: 5%;
+}
+
+.cl3{
+    display: block;
+    width:100%;
+    border-style: solid;
+    border-width: thin;
+    margin-left: 3%;
+    margin-top: 3%;
+    padding-left: 3%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+sidebar{
+    display: block;
+    float: left;
+    width: 20%;
+}
+
+content{
+    display: inline-block;
+    position: relative;
+    float: left;
+    border-left-style: solid;
+}
+
+input{
+    display: inline;
+}
+
+.profile::before{
+    content: url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/user-16.png);
+    width: 50px;
+    height: 50px;
+}
+
+li{
+    list-style: none;
+}
+
+.gruppi::after{
+    content: url(https://cdn2.iconfinder.com/data/icons/picol-vector/32/group_full_add-16.png);
+    margin-left: 5px;
+}
+
+.gruppo1::before{
+    content: url(https://cdn2.iconfinder.com/data/icons/vehicles-7/24/vehicles-22-16.png);
+}
+
+.gruppo2::before{
+    content: url(https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/alarm_clock-16.png);
+}
+
+.url_alleg::before{
+    content: url(https://cdn2.iconfinder.com/data/icons/picol-vector/32/attachment_add-16.png);
+}
+
+.radio_btn{
+    display: inline;
+}
+
+.btn_conf{
+    text-align: center;
+}
+
+img{
+    display: inline;
+}
+
+.nome{
+    display:inline;
+}
+
+.login_div{
+    width: 300px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+.login_header{
+    
+}
+
+.login_form_cont{
+    width: 300px;
+    height:auto;
+    margin: 0 auto;
+    border-style: solid;
+    border-width: thin;
+}
+
+.content{
+    width:200px;
+    height:auto;
+    margin: 0 auto;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    text-align: center;
+}
+
+.label_cont{
+    text-align: left;
+    width: 100%;
+}
+
+.text_area{
+    width:96%;
+}
+
+.btn_cont{
+    width:100%;
+    padding-top: 3px;
+}
+
+.login_btn{
+    width:100%;
+}
+
+.img_profilo_cont{
+    display:inline;
+    width: 30%;
+    height:100%;
+    padding-left: 15%;
+    padding-top: 15%;
+    float:right;
+}
+
+.col_img{
+    display: inline;
+    height: 100%;
+    width: 400px;
+    padding-left: 3px;
+}
+
+#immagine_profilo{
+    padding-top:3px;
+    width:180px; 
+    height:180px;
+}
+
+.cl4{
+    display: inline;
+    width: auto;
+    margin-left: 3%;
+    padding-left: 3%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    position: relative;
+    float: right;
+    bottom: 200px;
+    left: 10px;
+}
+
+.infos{
+    display: inline;
+}
+
+.info_labels{
+    display: inline-block;
+    width: 110px;
+}
+
+.aggiorna_prof{
+    width:100%;
+}
+
+.separa{
+    display: none;
+}
+}
+@media only screen and (min-width:480px)
+                   and (max-width:1024px){
+    body{
+    background-color: white;
+    font-family: Verdana, sans-serif;
+    color: darkslategray;
+    height: 100%;
+    width:100%;
+}
+
+h1,h2{
+   display: inline-block;
+}
+
+h1,h2{
+    font-size: 20px;
+}
+
+a{
+    text-decoration: none; 
+}
+
+a:hover{
+    color: darkblue;
+    text-decoration: underline;
+}
+
+a:visited{
+    color: darkblue;
+}
+
+.cl1{
+    display:inline-block;
+}
+
+.cl2{
+    display:inline-block;
+}
+
+.profile::before{
+    content: url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/user-16.png);
+    width: 50px;
+    height: 50px;
+}
+
+li{
+    list-style: none;
+}
+
+.gruppi::after{
+    content: url(https://cdn2.iconfinder.com/data/icons/picol-vector/32/group_full_add-16.png);
+    margin-left: 5px;
+}
+
+.gruppo1::before{
+    content: url(https://cdn2.iconfinder.com/data/icons/vehicles-7/24/vehicles-22-16.png);
+}
+
+.gruppo2::before{
+    content: url(https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/alarm_clock-16.png);
+}
+
+.url_alleg::before{
+    content: url(https://cdn2.iconfinder.com/data/icons/picol-vector/32/attachment_add-16.png);
+}
+
+#immagine_profilo{
+    padding-top:3px;
+    width:180px; 
+    height:180px;
+}
+
+header{
+    border-bottom-style: solid;
+}
+
+sidebar{
+    display:inline-block;
+    position: relative;
+    top: -355px;
+    padding-top: 3px;
+}
+
+content{
+    display: inline-block;
+    padding-top: 3px;
+}
+
+.cl3{
+    display: block;
+    width:100%;
+    border-style: solid;
+    border-width: thin;
+    margin-left: 3%;
+    margin-top: 3%;
+    padding-left: 3%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+}
+@media only screen and (max-width:480px){
+    body{
+    background-color: white;
+    font-family: Verdana, sans-serif;
+    color: darkslategray;
+    height: 100%;
+    width:100%;
+}
+
+h1,h2{
+   display: inline-block; 
+}
+
+a{
+    text-decoration: none; 
+}
+
+a:hover{
+    color: darkblue;
+    text-decoration: underline;
+}
+
+a:visited{
+    color: darkblue;
+}
+
+header{
+    border-bottom-style: solid;
+}
+
+.separa{
+    width:100%;
+    border-bottom-style: solid;
+}
+
+.cl3{
+    display: block;
+    width:100%;
+    border-style: solid;
+    border-width: thin;
+    margin-left: 3%;
+    margin-top: 3%;
+    padding-left: 3%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+.profile::before{
+    content: url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/user-16.png);
+    width: 50px;
+    height: 50px;
+}
+
+li{
+    list-style: none;
+}
+
+.gruppi::after{
+    content: url(https://cdn2.iconfinder.com/data/icons/picol-vector/32/group_full_add-16.png);
+    margin-left: 5px;
+}
+
+.gruppo1::before{
+    content: url(https://cdn2.iconfinder.com/data/icons/vehicles-7/24/vehicles-22-16.png);
+}
+
+.gruppo2::before{
+    content: url(https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/alarm_clock-16.png);
+}
+
+.url_alleg::before{
+    content: url(https://cdn2.iconfinder.com/data/icons/picol-vector/32/attachment_add-16.png);
+}
+
+#immagine_profilo{
+    padding-top:3px;
+    width:180px; 
+    height:180px;
+}
+
+}
+
+.popup{
+    width: 300px;
+    height: 200px;
+    margin: 0 auto;
+}
