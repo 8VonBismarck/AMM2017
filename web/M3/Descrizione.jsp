@@ -16,7 +16,24 @@
     </head>
     <body>
         <c:set var="page" value="descrizione" scope="request"/>
-            <jsp:include page="Header.jsp"/>
+        <%--<jsp:include page="Header.jsp"/>--%>
+        
+        
+        <header>
+            <div class="cl1">
+                <h1>NerdBook</h1>
+            </div>
+
+            <div class="cl2">
+                <a href="profilo.html">
+                    <h1>Profilo</h1>
+                </a>
+
+                <a href="bacheca.html">
+                    <h1>Bacheca</h1>
+                </a>
+            </div>
+        </header>
         <nav>
             <a href="login.html">
                 <h4>Login!</h4>
