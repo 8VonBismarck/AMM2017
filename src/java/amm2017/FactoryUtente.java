@@ -10,9 +10,11 @@ import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,9 +26,13 @@ public class FactoryUtente {
     
     private static FactoryUtente singleton;
     private ArrayList<Utente> listaUtenti = new ArrayList<Utente>();
+    private String connectionString; 
+    private String connectionUsername;
+    private String connectionPassword;
+    
     
     private FactoryUtente(){
-    
+    /*
         //utente 1
         Utente utente1 = new Utente();
         utente1.setId(1);
@@ -75,25 +81,40 @@ public class FactoryUtente {
         listaUtenti.add(utente1);
         listaUtenti.add(utente2);
         listaUtenti.add(utente3);
-        listaUtenti.add(incompleto);
+        listaUtenti.add(incompleto);*/
     }
     
-    public static FactoryUtente getInstance(){
-        
-        if(singleton==null)
-            singleton=new FactoryUtente();
+    
+    
+        public static FactoryUtente getInstance()
+    {
+        if (singleton == null) singleton = new FactoryUtente();      
         return singleton;
-    }
-    /*
-    public Utente getUtenteById(int id){
+    }   
+    public void setConnectionString(String s) { this.connectionString = s; }    
+    public String getConnectionString() { return this.connectionString; }      
+    public static boolean checkCompletion(Utente utente) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
+    {
+        String tmp="";
+
+        Method [] methods=utente.getClass().getDeclaredMethods();
         
-        for(Utente tmpUtente : this.listaUtenti){
-            if(tmpUtente.getId()==id)
-                return tmpUtente;
-        }
-        return null;
-    }*/
-    
+        for(Method m : methods)
+        {
+            if(m.getName().startsWith("get") && m.getReturnType()==String.class)
+            {
+                if(m.getName().endsWith("Nome") || m.getName().endsWith("Cognome") 
+                        || m.getName().endsWith("FrasePresentazione") || m.getName().endsWith("UrlFotoProfilo") )
+                {
+                    tmp = (String)m.invoke(utente);
+                    if(tmp == null || tmp.equals(""))
+                        return false;
+                }
+            }
+        }      
+        return true;
+    } 
+
     public Utente getUtenteByEmail(String email){
     
         for (Utente tmpUtente : this.listaUtenti){
@@ -116,31 +137,6 @@ public class FactoryUtente {
         return utentiTrovati;        
     }
     
-     public static boolean checkCompletion(Utente u) throws IllegalAccessException,
-                     IllegalArgumentException,
-                     InvocationTargetException
-    {
-        String tmp="";
-        String dummy="";
-        Method [] methods=u.getClass().getDeclaredMethods();
-        
-        for(Method m : methods)
-        {
-            if(m.getName().startsWith("get") && m.getReturnType()==String.class)
-            {
-                if(m.getName().endsWith("Nome") || m.getName().endsWith("Cognome") 
-                        || m.getName().endsWith("Motto") || m.getName().endsWith("UrlImgProfilo") )
-                {
-                    tmp=(String)m.invoke(u);
-                    if(tmp.equals(dummy))
-                        return false;
-                }
-            }
-        }
-        
-        return true;
-    }
-    
      public ArrayList<Utente> getFriends(Utente t)
     {
         ArrayList<Utente> tmp = new ArrayList<Utente>();
@@ -152,51 +148,171 @@ public class FactoryUtente {
         
         return tmp;
     } 
-     
-    private String connectionString; 
-     
-    public void setConnectionString(String s){
-	this.connectionString = s;
-    }
-    
-    public String getConnectionString(){
-	return this.connectionString;
-    } 
     
     public Utente getUtenteById(int id) 
     {
-        Utente tmp = null;
-        String query = "select * from utenti where id="+id;
-        ResultSet set = null;
-        
         try
         {
-            Connection conn = DriverManager.getConnection(this.getConnectionString(), "ali_baba", "apriti sesamo");
-            Statement stmt = conn.createStatement();
+            Connection conn = DriverManager.getConnection(connectionString, "matteo", "matteo");
             
-            set = stmt.executeQuery(query);
-             
-            if(set.next())
-            {
-                tmp = new Utente(set.getInt("id"), set.getString("nome"), set.getString("cognome"), set.getString("dataNascita"), 
-                        set.getString("motto"), set.getString("password"), set.getString("urlImgProfilo"),
-                        set.getString("email"));
-            }
+            String query = 
+                      "select * from utenti "
+                    + "where id = ?";
             
-            stmt.close();
-            conn.close();
-            
-        }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(FactoryUtente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-        
-        return tmp;
-    }
+            PreparedStatement stmt = conn.prepareStatement(query);
 
+            stmt.setInt(1, id);
+            
+            ResultSet res = stmt.executeQuery();
+            
+            if (res.next()) {
+                Utente current = new Utente();
+                current.setId(res.getInt("id"));
+                current.setNome(res.getString("nome"));
+                current.setCognome(res.getString("cognome"));
+                current.setDataNascita(res.getString("dataNascita"));
+                current.setMotto(res.getString("motto"));
+                current.setPassword(res.getString("password"));
+                current.setUrlImgProfilo(res.getString("urlImgProfilo"));
+                current.setEmail(res.getString("email"));
+
+                stmt.close();
+                conn.close();
+                return current;
+            }    
+                
+                 stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+return null;
 
 }
+    
+    public int getIdByEmailAndPassword(String email, String password){
+        try {
+            // path, username, password
+            Connection conn = DriverManager.getConnection(connectionString, "matteo", "matteo");
+            
+            String query = 
+                      "select id from utenti "
+                    + "where email = ? and password = ?";
+            
+            // Prepared Statement
+            PreparedStatement stmt = conn.prepareStatement(query);
+            
+            // Si associano i valori
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            
+            // Esecuzione query
+            ResultSet res = stmt.executeQuery();
+
+            // ciclo sulle righe restituite
+            if (res.next()) {
+                int id = res.getInt("id");
+
+                stmt.close();
+                conn.close();
+                return id;
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+        }
+    
+    public List getUtentiiList() {
+        List<Utente> listaUtenti = new ArrayList<Utente>();
+        
+        try {
+            // path, username, password
+            Connection conn = DriverManager.getConnection(connectionString, "matteo", "matteo");
+            
+            String query = 
+                      "select * from utenti";
+            
+            // Prepared Statement
+            PreparedStatement stmt = conn.prepareStatement(query);
+            
+            // Esecuzione query
+            ResultSet res = stmt.executeQuery();
+
+            // ciclo sulle righe restituite
+            while (res.next()) {
+                Utente current = new Utente();
+                current.setId(res.getInt("id"));
+                current.setNome(res.getString("nome"));
+                current.setCognome(res.getString("cognome"));
+                current.setDataNascita(res.getString("dataNascita"));
+                current.setMotto(res.getString("motto"));
+                current.setPassword(res.getString("password"));
+                current.setUrlImgProfilo(res.getString("urlImgProfilo"));
+                current.setEmail(res.getString("email"));
+                
+                listaUtenti.add(current);
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return listaUtenti;
+    }
+    
+     public List getUtentiList(String nome) {
+        List<Utente> listaUtenti = new ArrayList<Utente>();
+        
+        try {
+            // path, username, password
+            Connection conn = DriverManager.getConnection(connectionString, "matteo", "matteo");
+            
+            String query = 
+                      "select * from utenti where nome like ?";
+            
+            // Prepared Statement
+            PreparedStatement stmt = conn.prepareStatement(query);
+            
+            // Si associano i valori
+            stmt.setString(1, "%" + nome + "%");
+            
+            // Esecuzione query
+            ResultSet res = stmt.executeQuery();
+
+            // ciclo sulle righe restituite
+            while (res.next()) {
+                Utente current = new Utente();
+                current.setId(res.getInt("id"));
+                current.setNome(res.getString("nome"));
+                current.setCognome(res.getString("cognome"));
+                current.setDataNascita(res.getString("dataNascita"));
+                current.setMotto(res.getString("motto"));
+                current.setPassword(res.getString("password"));
+                current.setUrlImgProfilo(res.getString("urlImgProfilo"));
+                current.setEmail(res.getString("email"));
+                
+                listaUtenti.add(current);
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return listaUtenti;
+}
+    
+}
+    
+
+
+
 
 

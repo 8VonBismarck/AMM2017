@@ -10,24 +10,24 @@ package amm2017;
  * @author admin
  */
 public class Post {
-    
+    /*
     public enum PostType
     {
         TESTO, IMMAGINE, LINK
-    };
-    
+    };*/
+    /*
     public enum DestinationType
     {
         INVALID, BACHECA, GRUPPO;
     };
-         
+     */    
     
     private int id;
     private Utente autorePost;
     private String contenuto;
-    private PostType tipoPost;
+    private int tipoPost;
     private String attachedUrl;   
-    private DestinationType tipoDestinazione;
+    private int tipoDestinazione;
     private int idDestinazione;
     
     public Post()
@@ -36,7 +36,7 @@ public class Post {
         this.autorePost=null;
         this.contenuto="";
         this.attachedUrl="";     
-        this.tipoDestinazione=DestinationType.INVALID;
+        this.tipoDestinazione=-1;
         this.idDestinazione=-1;
     }
           
@@ -65,12 +65,12 @@ public class Post {
         this.contenuto=testo;
     }
     
-    public PostType getTipoPost() {
+    public int getTipoPost() {
         return tipoPost;
     }
 
     
-    public void setTipoPost(PostType tipoPost) {
+    public void setTipoPost(int tipoPost) {
         this.tipoPost = tipoPost;
     }
 
@@ -82,11 +82,11 @@ public class Post {
         this.attachedUrl = attachedUrl;
     }
 
-    public DestinationType getTipoDestinazione() {
+    public int getTipoDestinazione() {
         return tipoDestinazione;
     }
 
-    public void setTipoDestinazione(DestinationType tipoDestinazione) {
+    public void setTipoDestinazione(int tipoDestinazione) {
         this.tipoDestinazione = tipoDestinazione;
     }
 
