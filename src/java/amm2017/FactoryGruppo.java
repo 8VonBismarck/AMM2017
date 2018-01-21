@@ -5,6 +5,11 @@
  */
 package amm2017;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -19,7 +24,7 @@ public class FactoryGruppo {
     
     private FactoryGruppo()
     {
-    
+        /*
         FactoryUtente tmp = FactoryUtente.getInstance();
         
         //gruppo 1
@@ -33,6 +38,7 @@ public class FactoryGruppo {
         gruppo2.setId(2);
         gruppo2.setNome("Ritardatari");
         gruppo2.setIscritti(new ArrayList<Utente>(Arrays.asList(tmp.getUtenteById(1), tmp.getUtenteById(2), tmp.getUtenteById(3))));
+        */
     }
     
     public static FactoryGruppo getInstance(){
@@ -43,14 +49,42 @@ public class FactoryGruppo {
         return singleton;
     }
     
-    public Gruppo getGruppoById(int id){
-        
-        for(Gruppo tmpGruppo : this.listaGruppi){
-            if(tmpGruppo.getId()==id)
-                return tmpGruppo;
+    public Gruppo getGruppoById(int id) 
+    {
+        try
+        {
+            Connection conn = DriverManager.getConnection(connectionString, "matteo", "matteo");
+            
+            String query = 
+                      "select * from gruppi "
+                    + "where id = ?";
+            
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setInt(1, id);
+            
+            ResultSet res = stmt.executeQuery();
+            
+            if (res.next()) {
+                Gruppo current = new Gruppo();
+                current.setId(res.getInt("id"));
+                current.setNome(res.getString("nome"));
+
+                stmt.close();
+                conn.close();
+                return current;
+            }    
+                
+                 stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
+
     }
+    
+    
     
     public ArrayList<Gruppo> getSubscribedGroups(Utente t)
     {

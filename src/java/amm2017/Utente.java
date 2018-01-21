@@ -56,6 +56,12 @@ public class Utente {
         this.email = email;
     }
     
+    public Utente(String nome, String cognome, int id){
+        this.nome = nome;
+        this.cognome = cognome;
+        this.id = id;
+    }
+    
     public int getId(){
         return id;
     }
@@ -118,5 +124,9 @@ public class Utente {
     
     public void setEmail(String email){
         this.email=email;
+    }
+
+    public Utente getEssentials() {
+        return new Utente(this.nome, this.cognome, this.id);
     }
 }

@@ -19,6 +19,10 @@
         <servlet-name>Bacheca</servlet-name>
         <servlet-class>amm2017.Bacheca</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Filter</servlet-name>
+        <servlet-class>amm2017.Filter</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Descrizione</servlet-name>
         <url-pattern>/Descrizione.jsp</url-pattern>
@@ -34,6 +38,10 @@
     <servlet-mapping>
         <servlet-name>Bacheca</servlet-name>
         <url-pattern>/bacheca.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Filter</servlet-name>
+        <url-pattern>/filter.json</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
